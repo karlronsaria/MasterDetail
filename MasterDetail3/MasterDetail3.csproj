@@ -11,6 +11,22 @@
     <UseWinUI>true</UseWinUI>
     <EnableMsixTooling>true</EnableMsixTooling>
   </PropertyGroup>
+  <ItemGroup>
+    <Content Remove="Assets\About.png" />
+    <Content Remove="Assets\Blurrg.png" />
+    <Content Remove="Assets\BobaFett.png" />
+    <Content Remove="Assets\DarkTrooper.png" />
+    <Content Remove="Assets\DinDjarin.png" />
+    <Content Remove="Assets\Grogu.png" />
+    <Content Remove="Assets\Home.png" />
+    <Content Remove="Assets\IG11.png" />
+    <Content Remove="Assets\Kuiil.png" />
+    <Content Remove="Assets\MoffGideon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="Views\AboutPage.xaml" />
+    <None Remove="Views\HomePage.xaml" />
+  </ItemGroup>
 
   <ItemGroup>
     <Content Include="Assets\SplashScreen.scale-200.png" />
@@ -34,7 +50,17 @@
     package has not yet been restored.
   -->
   <ItemGroup Condition="'$(DisableMsixProjectCapabilityAddedByProject)'!='true' and '$(EnableMsixTooling)'=='true'">
-    <ProjectCapability Include="Msix"/>
+    <ProjectCapability Include="Msix" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Views\HomePage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Views\AboutPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
 
   <!-- 
