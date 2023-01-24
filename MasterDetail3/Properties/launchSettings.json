@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "MasterDetail3 (Package)": {
+      "commandName": "MsixPackage"
+    },
+    "MasterDetail3 (Unpackaged)": {
+      "commandName": "Project"
+    }
+  }
+}
