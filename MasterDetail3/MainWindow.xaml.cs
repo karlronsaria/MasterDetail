@@ -33,7 +33,7 @@ namespace MasterDetail3
         }
     }
 
-    public sealed partial class MainWindow : INavigate
+    public sealed partial class MainWindow : INavigate, MasterDetail3.Services.INavigable
     {
         private void NavigationView_Loaded(object sender, RoutedEventArgs e)
         {
@@ -124,6 +124,11 @@ namespace MasterDetail3
         public bool Navigate(Type sourcePageType)
         {
             return ContentFrame.Navigate(sourcePageType);
+        }
+
+        public void SetCurrentPage(Type sourcePageType)
+        {
+            _ = Navigate(sourcePageType);
         }
     }
 }
