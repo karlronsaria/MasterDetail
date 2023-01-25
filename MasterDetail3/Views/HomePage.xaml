@@ -8,7 +8,7 @@
     xmlns:local="using:MasterDetail3.Views"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:viewmodels="using:MasterDetail3.ViewModels"
+    xmlns:viewmodels="using:MasterDetail3.ViewModels" xmlns:models="using:MasterDetail3.Models"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
@@ -74,7 +74,6 @@
                 VerticalAlignment="Center"
                 Margin="8 0"
                 />
-            <!--
             <CommandBar
                 Background="Transparent"
                 DefaultLabelPosition="Right"
@@ -102,8 +101,164 @@
                     IsEnabled="{x:Bind ViewModel.HasCurrent, Mode=OneWay}"
                     />
             </CommandBar>
-            -->
         </Grid>
+        <ListView
+            x:Name="CharacterListView"
+            ItemsSource="{x:Bind ViewModel.Items, Mode=OneWay}"
+            SelectedItem="{x:Bind ViewModel.Current, Mode=TwoWay}"
+            Grid.Row="1"
+            >
+            <ListView.ItemTemplate>
+                <DataTemplate
+                    x:DataType="models:Character"
+                    >
+                    <UserControl
+                        PointerEntered="ListViewItem_PointerEntered"
+                        PointerExited="ListViewItem_PointerExited"
+                        >
+                        <RelativePanel
+                            Background="Transparent"
+                            >
+                            <VisualStateManager.VisualStateGroups>
+                                <VisualStateGroup
+                                    x:Name="HoveringStates"
+                                    >
+                                    <VisualState x:Name="HoverButtonsHidden" />
+                                    <VisualState x:Name="HoverButtonsShown">
+                                        <VisualState.Setters>
+                                            <Setter
+                                                Target="HoverButtons.Visibility"
+                                                Value="Visible"
+                                                />
+                                        </VisualState.Setters>
+                                    </VisualState>
+                                </VisualStateGroup>
+                            </VisualStateManager.VisualStateGroups>
+                            <TextBlock
+                                RelativePanel.AlignLeftWithPanel="True"
+                                RelativePanel.AlignVerticalCenterWithPanel="True"
+                                Margin="0 8"
+                                >
+                                <Run
+                                    Text="{x:Bind Name, Mode=OneWay}"
+                                    FontWeight="SemiBold"
+                                    />
+                                <LineBreak/>
+                                <Run
+                                    Text="{x:Bind Kind, Mode=OneWay}"
+                                    />
+                            </TextBlock>
+                            <StackPanel
+                                x:Name="HoverButtons"
+                                Orientation="Horizontal"
+                                Visibility="Collapsed"
+                                RelativePanel.AlignRightWithPanel="True"
+                                RelativePanel.AlignVerticalCenterWithPanel="True"
+                                >
+                                <AppBarButton
+                                    IsCompact="True"
+                                    HorizontalAlignment="Right"
+                                    Command="{StaticResource DuplicateCommand}"
+                                    CommandParameter="{x:Bind Name}"
+                                    Width="32"
+                                    />
+                                <AppBarButton
+                                    IsCompact="True"
+                                    HorizontalAlignment="Right"
+                                    Command="{StaticResource DeleteCommand}"
+                                    CommandParameter="{x:Bind Name}"
+                                    Width="32"
+                                    />
+                            </StackPanel>
+                        </RelativePanel>
+                    </UserControl>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+        <Grid
+            Visibility="{x:Bind ViewModel.HasCurrent, Mode=OneWay}"
+            Margin="20"
+            Grid.Column="1"
+            Grid.Row="1"
+            >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <TextBlock
+                VerticalAlignment="Center"
+                Margin="100 0"
+                >
+                <Run
+                    Text="{x:Bind ViewModel.Current.Name, Mode=OneWay}"
+                    FontSize="32"
+                    FontWeight="SemiBold"
+                    />
+                <LineBreak/>
+                <Run
+                    Text="{x:Bind ViewModel.Current.Kind, Mode=OneWay}"
+                    />
+            </TextBlock>
 
+            <Image
+                Source="{x:Bind ViewModel.Current.ImagePath, Mode=OneWay}"
+                VerticalAlignment="Center"
+                HorizontalAlignment="Right"
+                Opacity=".4"
+                Grid.RowSpan="2"
+                />
+
+            <TextBlock
+                Text="{x:Bind ViewModel.Current.Description, Mode=OneWay}"
+                VerticalAlignment="Center"
+                TextWrapping="Wrap"
+                Margin="100 0"
+                Grid.Row="1"
+                />
+        </Grid>
+        <ContentDialog
+            x:Name="EditDialog"
+            PrimaryButtonText="Update"
+            CloseButtonText="Cancel"
+            Background="{ThemeResource SystemAccentColor}"
+            >
+            <RelativePanel
+                HorizontalAlignment="Stretch"
+                >
+                <TextBox
+                    x:Name="Name"
+                    Header="Name"
+                    Text="{Binding Name, Mode=TwoWay}"
+                    Margin="4"
+                    />
+                <TextBox
+                    x:Name="Kind"
+                    Header="Kind"
+                    Text="{Binding Kind, Mode=TwoWay}"
+                    Margin="4"
+                    RelativePanel.RightOf="Name"
+                    RelativePanel.AlignRightWithPanel="True"
+                    />
+                <TextBox
+                    x:Name="ImagePath"
+                    Header="Path to Image"
+                    Text="{Binding ImagePath, Mode=TwoWay}"
+                    Margin="4"
+                    RelativePanel.Below="Name"
+                    RelativePanel.AlignLeftWith="Name"
+                    RelativePanel.AlignRightWith="Kind"
+                    />
+                <TextBox
+                    x:Name="Description"
+                    Header="Description"
+                    Text="{Binding Description, Mode=TwoWay}"
+                    TextWrapping="Wrap"
+                    Margin="4"
+                    RelativePanel.Below="ImagePath"
+                    RelativePanel.AlignLeftWith="ImagePath"
+                    RelativePanel.AlignRightWith="ImagePath"
+                    />
+            </RelativePanel>
+        </ContentDialog>
     </Grid>
 </Page>

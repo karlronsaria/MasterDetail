@@ -52,8 +52,8 @@ namespace MasterDetail3.Views
 
         public ICommand NewCommand => new AsyncRelayCommand(OpenNewDialog);
         public ICommand EditCommand => new AsyncRelayCommand(OpenEditDialog);
-        public ICommand UpdateCommand => new AsyncRelayCommand(OpenUpdateDialog);
-        public ICommand InsertCommand => new AsyncRelayCommand(OpenInsertDialog);
+        public ICommand UpdateCommand => new RelayCommand(Update);
+        public ICommand InsertCommand => new RelayCommand(Insert);
 
         private void ViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
@@ -65,7 +65,9 @@ namespace MasterDetail3.Views
 
         private void ListViewItem_PointerEntered(object sender, PointerRoutedEventArgs e)
         {
-            if (e.Pointer.PointerDeviceType is Microsoft.UI.Input.PointerDeviceType.Mouse or PointDeviceType.Pen)
+            if (e.Pointer.PointerDeviceType is
+                Microsoft.UI.Input.PointerDeviceType.Mouse or
+                Microsoft.UI.Input.PointerDeviceType.Pen)
             {
                 VisualStateManager
                     .GoToState(sender as Control, "HoverButtonsShown", true);
