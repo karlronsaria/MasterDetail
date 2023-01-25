@@ -8,10 +8,10 @@
     xmlns:local="using:MasterDetail3.Views"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:viewmodels="using:MasterDetail3.ViewModels"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <!--
     <Page.Resources>
         <XamlUICommand
             x:Name="DuplicateCommand"
@@ -37,11 +37,10 @@
             />
     </Page.Resources>
     <Page.DataContext>
-        <ViewModels:HomePageViewModel
+        <viewmodels:HomePageViewModel
             x:Name="ViewModel"
             />
     </Page.DataContext>
-    -->
 
     <Grid
         Margin="0 0 0 80"
